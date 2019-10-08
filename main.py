@@ -1,6 +1,12 @@
 import PiMotor
 import time
-from gpiozero import Servo
+import RPi.GPIO as GPIO
+
+servoPIN = 38
+
+GPIO.setup(servoPIN, GPIO.OUT)
+p = GPIO.PWM(servoPIN, 50)
+p.start(2.5)
 
 m1 = PiMotor.Motor("MOTOR1", 1)
 m2 = PiMotor.Motor("MOTOR2", 1)
@@ -14,5 +20,27 @@ al = PiMotor.Arrow(2)
 af = PiMotor.Arrow(3)
 ar = PiMotor.Arrow(4)
 
-# declare a servo object after servo is wired up
+try:
+    while True:
+       # p.ChangeDutyCycle(5)
+       # time.sleep(0.5)
+       # p.ChangeDutyCycle(7.5)
+       # time.sleep(0.5)
+       # p.ChangeDutyCycle(10)
+       # time.sleep(0.5)
+       # p.ChangeDutyCycle(12.5)
+       # time.sleep(0.5)
+       # p.ChangeDutyCycle(10)
+       # time.sleep(0.5)
+        p.ChangeDutyCycle(7.5)
+        time.sleep(0.5)
+       # p.ChangeDutyCycle(5)
+       # time.sleep(0.5)
+       # p.ChangeDutyCycle(2.5)
+       # time.sleep(0.5)
+except KeyboardInterrupt:
+    p.stop()
+    GPIO.cleanup()
 
+
+print('Hello World!')

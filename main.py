@@ -6,7 +6,7 @@ servoPIN = 38
 
 GPIO.setup(servoPIN, GPIO.OUT)
 servo = GPIO.PWM(servoPIN, 50)
-p.start(2.5)
+servo.start(2.5)
 
 m1 = PiMotor.Motor("MOTOR1", 1)
 m2 = PiMotor.Motor("MOTOR2", 1)
@@ -39,9 +39,9 @@ try:
         servo.ChangeDutyCycle(5)
         time.sleep(0.5)
         servo.ChangeDutyCycle(2.5)
-        servo.sleep(0.5)
+        time.sleep(0.5)
 except KeyboardInterrupt:
-    p.stop()
+    servo.stop()
     GPIO.cleanup()
 
 

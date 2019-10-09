@@ -6,7 +6,7 @@ servoPIN = 38
 
 GPIO.setup(servoPIN, GPIO.OUT)
 servo = GPIO.PWM(servoPIN, 50)
-p.start(2.5)
+time.start(2.5)
 
 m1 = PiMotor.Motor("MOTOR1", 1)
 m2 = PiMotor.Motor("MOTOR2", 1)
@@ -20,10 +20,14 @@ al = PiMotor.Arrow(2)
 af = PiMotor.Arrow(3)
 ar = PiMotor.Arrow(4)
 
-sensor =  PiMotor.Sensor("ULTRASONIC", 5)
+sensor =  PiMotor.Sensor("ULTRASONIC", 1)
 
-try:
-    while True:
+
+def servo_scan():
+
+    # Change this while loop to stop when sensor is triggered
+
+    while True
         servo.ChangeDutyCycle(5)
         time.sleep(0.5)
         servo.ChangeDutyCycle(7.5)
@@ -39,10 +43,23 @@ try:
         servo.ChangeDutyCycle(5)
         time.sleep(0.5)
         servo.ChangeDutyCycle(2.5)
-        servo.sleep(0.5)
+        time.sleep(0.5)
+
+def look_left():
+    # stub
+
+def look_right():
+    # stub
+
+
+    
+
+try:
+    while True:
+        mAll.forward(100)
+        servo_scan()
+
 except KeyboardInterrupt:
-    p.stop()
+    servo.stop()
     GPIO.cleanup()
 
-
-print('Hello World!')

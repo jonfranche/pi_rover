@@ -20,35 +20,33 @@ al = PiMotor.Arrow(2)
 af = PiMotor.Arrow(3)
 ar = PiMotor.Arrow(4)
 
-sensor =  PiMotor.Sensor("ULTRASONIC", 1)
+sensor =  PiMotor.Sensor("ULTRASONIC", 10)
 
 
 def servo_scan():
 
     # Change this while loop to stop when sensor is triggered
+    servo.ChangeDutyCycle(5)
+    time.sleep(0.5)
+    servo.ChangeDutyCycle(7.5)
+    time.sleep(0.5)
+    servo.ChangeDutyCycle(10)
+    time.sleep(0.5)
+    servo.ChangeDutyCycle(12.5)
+    time.sleep(0.5)
+    servo.ChangeDutyCycle(10)
+    time.sleep(0.5)
+    servo.ChangeDutyCycle(7.5)
+    time.sleep(0.5)
+    servo.ChangeDutyCycle(5)
+    time.sleep(0.5)
+    servo.ChangeDutyCycle(2.5)
+    time.sleep(0.5)
 
-    while True
-        servo.ChangeDutyCycle(5)
-        time.sleep(0.5)
-        servo.ChangeDutyCycle(7.5)
-        time.sleep(0.5)
-        servo.ChangeDutyCycle(10)
-        time.sleep(0.5)
-        servo.ChangeDutyCycle(12.5)
-        time.sleep(0.5)
-        servo.ChangeDutyCycle(10)
-        time.sleep(0.5)
-        servo.ChangeDutyCycle(7.5)
-        time.sleep(0.5)
-        servo.ChangeDutyCycle(5)
-        time.sleep(0.5)
-        servo.ChangeDutyCycle(2.5)
-        time.sleep(0.5)
-
-def look_left():
+# def look_left():
     # stub
 
-def look_right():
+# def look_right():
     # stub
 
 
@@ -57,7 +55,12 @@ def look_right():
 try:
     while True:
         mAll.forward(100)
-        servo_scan()
+        sensor.trigger()
+        while sensor.Triggered == False:
+            servo_scan()
+
+        mAll.stop()
+        time.sleep(5)
 
 except KeyboardInterrupt:
     servo.stop()

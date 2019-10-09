@@ -6,7 +6,7 @@ servoPIN = 38
 
 GPIO.setup(servoPIN, GPIO.OUT)
 servo = GPIO.PWM(servoPIN, 50)
-time.start(2.5)
+servo.start(2.5)
 
 m1 = PiMotor.Motor("MOTOR1", 1)
 m2 = PiMotor.Motor("MOTOR2", 1)

@@ -25,11 +25,11 @@ sensor =  PiMotor.Sensor("ULTRASONIC", 10)
 def servo_scan():
     for x in range (2, 6, 1):
         servo.ChangeDutyCycle(x * 2.5)
-        time.sleep(0.5)
+        time.sleep(0.25)
         sensor.trigger()
     for x in range (5, 0, -1):
         servo.ChangeDutyCycle(x * 2.5)
-        time.sleep(0.5)
+        time.sleep(0.25)
         sensor.trigger()
 
 try:

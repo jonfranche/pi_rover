@@ -20,23 +20,31 @@ al = PiMotor.Arrow(2)
 af = PiMotor.Arrow(3)
 ar = PiMotor.Arrow(4)
 
-sensor =  PiMotor.Sensor("ULTRASONIC", 10)
-    
+sensor =  PiMotor.Sensor("ULTRASONIC", 30)
+
 def servo_scan():
     for x in range (2, 6, 1):
         servo.ChangeDutyCycle(x * 2.5)
-        time.sleep(0.25)
+        time.sleep(0.1)
         sensor.trigger()
+        if sensor.Triggered == True:
+            return True
+
     for x in range (5, 0, -1):
         servo.ChangeDutyCycle(x * 2.5)
-        time.sleep(0.25)
+        time.sleep(0.1)
         sensor.trigger()
+        if sensor.Triggered == True:
+            return True
+
+    return False
+
 
 try:
     while True:
-        mAll.forward(100)
-        while sensor.Triggered == False:
-            servo_scan()
+
+        while servo_scan() == False:
+            mAll.forward(100)
 
         mAll.stop()
         time.sleep(5)

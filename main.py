@@ -6,12 +6,15 @@ servoPIN = 38
 
 GPIO.setup(servoPIN, GPIO.OUT)
 servo = GPIO.PWM(servoPIN, 50)
-servo.start(2.5)
+servo.start(7.5)
 
 m1 = PiMotor.Motor("MOTOR1", 1)
 m2 = PiMotor.Motor("MOTOR2", 1)
 m3 = PiMotor.Motor("MOTOR3", 1)
 m4 = PiMotor.Motor("MOTOR4", 1)
+
+mLeft = PiMotor.Motor(m1, m2)
+mRight = PiMotor.Motor(m3, m4)
 
 mAll = PiMotor.LinkedMotors(m1, m2, m3, m4)
 
@@ -20,34 +23,47 @@ al = PiMotor.Arrow(2)
 af = PiMotor.Arrow(3)
 ar = PiMotor.Arrow(4)
 
-sensor =  PiMotor.Sensor("ULTRASONIC", 30)
+sensor =  PiMotor.Sensor("ULTRASONIC", 40)
 
 def servo_scan():
-    for x in range (2, 6, 1):
-        servo.ChangeDutyCycle(x * 2.5)
-        time.sleep(0.1)
+    look_left()
+    sensor.trigger()
+    if sensor.Triggered == False:
+        mAll.reverse(100)
+        time.sleep(1)
+        mAll.stop()
+        mLeft.forward(100)
+        time.sleep(2)
+        mLeft.stop()
+    else:
+        look_right()
         sensor.trigger()
-        if sensor.Triggered == True:
-            return True
+        if sensor.Triggered == False:
+            mAll.reverse(100)
+            time.sleep(1)
+            mAll.stop()
+            mRight.forward(100)
+            time.sleep(2)
+            mRight.stop()
+        else:
+            mLeft.forward(100)
+            time.sleep(3)
+            mLeft.stop()
 
-    for x in range (5, 0, -1):
-        servo.ChangeDutyCycle(x * 2.5)
-        time.sleep(0.1)
-        sensor.trigger()
-        if sensor.Triggered == True:
-            return True
+def look_left():
+    servo.ChangeDutyCycle(12.5)
 
-    return False
-
+def look_right():
+    servo.ChangeDutyCycle(2.5)
 
 try:
     while True:
-
-        while servo_scan() == False:
-            mAll.forward(100)
-
-        mAll.stop()
-        time.sleep(5)
+        servo.ChangeDutyCycle(7.5)
+        mAll.forward(100)
+        sensor.trigger()
+        if sensor.Triggered:
+            mAll.stop()
+            servo_scan()
 
 except KeyboardInterrupt:
     servo.stop()

@@ -32,7 +32,7 @@ def servo_scan():
         mAll.reverse(100)
         time.sleep(1)
         mAll.stop()
-        mLeft.forward(100)
+        mLeft.forward(50)
         time.sleep(2)
         mLeft.stop()
     else:
@@ -42,28 +42,59 @@ def servo_scan():
             mAll.reverse(100)
             time.sleep(1)
             mAll.stop()
-            mRight.forward(100)
+            mRight.forward(50)
             time.sleep(2)
             mRight.stop()
         else:
             mLeft.forward(100)
-            time.sleep(3)
+            mRight.reverse(100)
+            time.sleep(2)
             mLeft.stop()
-
-def look_left():
+            
+def servo_scan2():
+    left = scan_left()
+    right = scan_right()
+    if sensor.Triggered == False and left > right:
+        servo.ChangeDutyCycle(7.5)
+        mAll.reverse(100)
+        time.sleep(1)
+        mAll.stop()
+        mLeft.forward(100)
+        time.sleep(2)
+        mLeft.stop()
+    elif sensor.Triggered == False and right > left:
+        servo.ChangeDutyCycle(7.5)
+        mAll.reverse(100)
+        time.sleep(1)
+        mAll.stop()
+        mRight.forward(100)
+        time.sleep(2)
+        mRight.stop()
+    else:
+        servo.ChangeDutyCycle(7.5)
+        mLeft.forward(100)
+        mRight.reverse(100)
+        time.sleep(3)
+        mLeft.stop()
+        mRight.stop()
+    
+def scan_left():
     servo.ChangeDutyCycle(12.5)
-
-def look_right():
+    sensor.trigger()
+    return sensor.lastRead
+    
+def scan_right():
     servo.ChangeDutyCycle(2.5)
+    sensor.trigger()
+    return sensor.lastRead
 
 try:
     while True:
-        servo.ChangeDutyCycle(7.5)
         mAll.forward(100)
         sensor.trigger()
         if sensor.Triggered:
             mAll.stop()
-            servo_scan()
+            servo_scan2()
 
 except KeyboardInterrupt:
     servo.stop()

@@ -53,7 +53,9 @@ def servo_scan():
             
 def servo_scan2():
     left = scan_left()
+    time.sleep(0.5)
     right = scan_right()
+    time.sleep(0.5)
     if sensor.Triggered == False and left > right:
         servo.ChangeDutyCycle(7.5)
         mAll.reverse(100)
@@ -81,11 +83,13 @@ def servo_scan2():
 def scan_left():
     servo.ChangeDutyCycle(12.5)
     sensor.trigger()
+    print('scanning left')
     return sensor.lastRead
     
 def scan_right():
     servo.ChangeDutyCycle(2.5)
     sensor.trigger()
+    print('scanning right')
     return sensor.lastRead
 
 try:

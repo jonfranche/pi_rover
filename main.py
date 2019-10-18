@@ -25,7 +25,7 @@ ar = PiMotor.Arrow(4)
 
 sensor =  PiMotor.Sensor("ULTRASONIC", 40)
 
-def servo_scan():
+''' def servo_scan():
     look_left()
     sensor.trigger()
     if sensor.Triggered == False:
@@ -49,7 +49,7 @@ def servo_scan():
             mLeft.forward(100)
             mRight.reverse(100)
             time.sleep(2)
-            mLeft.stop()
+            mLeft.stop() '''
             
 def servo_scan2():
     left = scan_left()

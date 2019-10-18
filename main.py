@@ -58,27 +58,35 @@ def servo_scan2():
     time.sleep(0.5)
     if sensor.Triggered == False and left > right:
         servo.ChangeDutyCycle(7.5)
-        mAll.reverse(100)
+        move_reverse()
         time.sleep(1)
-        mAll.stop()
+        reverse_stop()
         mLeft.forward(100)
+        al.on()
         time.sleep(2)
         mLeft.stop()
+        al.off()
     elif sensor.Triggered == False and right > left:
         servo.ChangeDutyCycle(7.5)
-        mAll.reverse(100)
+        move_reverse()
         time.sleep(1)
-        mAll.stop()
+        reverse_stop()
         mRight.forward(100)
+        ar.on()
         time.sleep(2)
         mRight.stop()
+        ar.off()
     else:
         servo.ChangeDutyCycle(7.5)
         mLeft.forward(100)
+        al.on()
         mRight.reverse(100)
+        ar.on()
         time.sleep(3)
         mLeft.stop()
+        al.off()
         mRight.stop()
+        ar.off()
     
 def scan_left():
     servo.ChangeDutyCycle(12.5)
@@ -92,12 +100,28 @@ def scan_right():
     print('scanning right')
     return sensor.lastRead
 
+def move_forward():
+    mAll.forward(100)
+    af.on()
+
+def forward_stop():
+    mAll.stop()
+    af.off()
+
+def move_reverse():
+    mAll.reverse(100)
+    ab.on()
+
+def reverse_stop():
+    mAll.stop()
+    ab.off()
+
 try:
     while True:
-        mAll.forward(100)
+        move_forward()
         sensor.trigger()
         if sensor.Triggered:
-            mAll.stop()
+            forward_stop()
             servo_scan2()
 
 except KeyboardInterrupt:

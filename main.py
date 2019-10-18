@@ -18,9 +18,9 @@ mRight = PiMotor.LinkedMotors(m3, m4)
 
 mAll = PiMotor.LinkedMotors(m1, m2, m3, m4)
 
-ab = PiMotor.Arrow(1)
+ab = PiMotor.Arrow(3)
 al = PiMotor.Arrow(2)
-af = PiMotor.Arrow(3)
+af = PiMotor.Arrow(1)
 ar = PiMotor.Arrow(4)
 
 sensor =  PiMotor.Sensor("ULTRASONIC", 40)
@@ -61,9 +61,9 @@ def servo_scan2():
         move_reverse()
         time.sleep(1)
         reverse_stop()
-        mLeft.forward(100)
+        mLeft.forward(50)
         al.on()
-        time.sleep(2)
+        time.sleep(1)
         mLeft.stop()
         al.off()
     elif sensor.Triggered == False and right > left:
@@ -73,7 +73,7 @@ def servo_scan2():
         reverse_stop()
         mRight.forward(100)
         ar.on()
-        time.sleep(2)
+        time.sleep(1)
         mRight.stop()
         ar.off()
     else:
@@ -87,6 +87,12 @@ def servo_scan2():
         al.off()
         mRight.stop()
         ar.off()
+
+'''def look_left():
+    servo.ChangeDutyCycle(12.5)
+
+def look_right():
+    servo.ChangeDutyCycle(2.5)'''
     
 def scan_left():
     servo.ChangeDutyCycle(12.5)

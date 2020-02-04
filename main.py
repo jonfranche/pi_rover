@@ -63,6 +63,7 @@ def servo_scan2():
         al.on()
         time.sleep(1)
         mLeft.stop()
+        mRight.stop()
         al.off()
     elif sensor.Triggered == False and right > left:
         servoX.ChangeDutyCycle(7.3)
@@ -75,6 +76,7 @@ def servo_scan2():
         ar.on()
         time.sleep(1)
         mRight.stop()
+        mLeft.stop()
         ar.off()
     else:
         servoX.ChangeDutyCycle(7.3)

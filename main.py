@@ -32,7 +32,7 @@ al = PiMotor.Arrow(2)
 af = PiMotor.Arrow(1)
 ar = PiMotor.Arrow(4)
 
-sensor =  PiMotor.Sensor("ULTRASONIC", 30)
+sensor =  PiMotor.Sensor("ULTRASONIC", 40)
 
 def scan_left():
     servoX.ChangeDutyCycle(12.5)
